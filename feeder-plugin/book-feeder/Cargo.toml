@@ -1,0 +1,40 @@
+[package]
+name = "book-feeder"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+# Book feeder sidecar: Project Gutenberg (via Gutendex). The proof-of-concept
+# feeder — single upstream, no preview-seeding, no BitTorrent — that validates
+# the meta-feeder-sdk + feeder HTTP contract end to end.
+
+[lib]
+name = "book_feeder"
+path = "src/lib.rs"
+
+[[bin]]
+name = "book-feeder"
+path = "src/main.rs"
+
+[dependencies]
+meta-feeder-sdk = { path = "../../crates/meta-feeder-sdk" }
+
+tokio = { version = "1.40", features = ["full"] }
+axum = { version = "0.7", features = ["json"] }
+anyhow = "1"
+async-trait = "0.1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+reqwest = { version = "0.12", features = ["json", "rustls-tls", "stream"], default-features = false }
+bytes = "1"
+futures = "0.3"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+
+[dev-dependencies]
+wiremock = "0.6"
+tempfile = "3"
+base64 = "0.22"
+tokio = { version = "1.40", features = ["full", "test-util"] }
